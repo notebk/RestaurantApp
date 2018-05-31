@@ -36,24 +36,11 @@ cats.new = function(req, res) {
       });
     };
 
-cats.list = function(req, res) {
+  cats.list = function(req, res) {
   var catList = db.getAll();
   var colorFilter;
   var message = "Cats by age:";
   
-  /*
-  if (req.params.color) {
-    colorFilter = req.params.color.toLowerCase();
-    message = "Cats by age with color " + req.params.color+ ":";
-  } else {
-    colorFilter = /^.*\;
-    message = "Cats by age:";
-    var filteredCats = catList;
-  }
-    filteredCats = catList.filter(function(item) {
-    return item.colors.indexOf(colorFilter) > -1; });
-  */
-  //  filteredCats = filteredCats.sort({age: -1});
   var filteredCats = catList.sort(function(a, b) {
         return b.age - a.age
       });
@@ -63,24 +50,47 @@ cats.list = function(req, res) {
       })
 };
 
-cats.delete = function(req, res) {
-  Cat.findOneAndRemove({}, {sort: {age: -1}}, function(err, cat) {
-    if (err) {
-      res.status(500).send("Something broke!");
-    } else {
-      var cats = [cat];
-      var message = "A cat disappeared into the night:";
-      if (!cat) {
-        cats = null;
-        message = "No cats left!";
-      }
-      var cats = cat ? [cat] : null;
-      res.render("cats", {
-        message: message,
-        cats: cats
-      })
-    }
-  })
-};
+cats.byColor = function(req, res) {
+  var catList = db.getAll();
+  var colorFilter;
+  var message;
 
+  if (req.params.color) {
+    colorFilter = req.params.color.toLowerCase();
+    message = "Cats by age with color " + req.params.color+ ":";
+  } else {
+    colorFilter = 'none';
+    message = "Cats by age:";
+    };
+    var filteredCats = catList.filter(function(item) {
+    return item.colors.indexOf(colorFilter) > -1; });
+    
+    filteredCats = filteredCats.sort(function(a, b) {
+      return b.age - a.age});
+
+    res.render("cats", {
+      message: message,
+      cats: filteredCats
+    });
+  };
+
+cats.delete = function(req, res) {
+  var catList = db.getAll();
+  var message = "This Cat Died:";
+
+  var filteredCats = catList.sort(function(a, b) {
+    return b.age - a.age});  
+   
+  var oldCat = filteredCats[0];
+  var index = catList.findIndex(
+    function (x) {return x === oldCat}
+  );
+  
+  db.remove(index);
+  
+  res.render("cats", {
+    message: message,
+    cats: [oldCat]
+  });
+};
 module.exports = cats;
