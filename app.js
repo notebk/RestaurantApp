@@ -1,6 +1,7 @@
 var exphbs = require('express-handlebars');
 var express = require('express');
 var index = require('./routes/index');
+var cats = require('./routes/cats');
 var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -20,5 +21,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', index.home);
+app.get('/cats/new', cats.new);
+app.get('/cats', cats.list);
 
 app.listen(3000);
