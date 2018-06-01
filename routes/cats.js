@@ -75,16 +75,17 @@ cats.byColor = function(req, res) {
   };
 
 cats.delete = function(req, res) {
-  var catList = db.getAll();
+//  var catList = db.getAll();
   var message = "This Cat Died:";
 
-  var filteredCats = catList.sort(function(a, b) {
-    return b.age - a.age});  
+// var filteredCats = catList.sort(function(a, b) {
+//    return b.age - a.age});  
    
-  var oldCat = filteredCats[0];
-  var index = catList.findIndex(
-    function (x) {return x === oldCat}
-  );
+db.data.sort(function(a, b) {
+  return b.age - a.age});  
+
+var oldCat = db.data[0];
+var index = 0;
   
   db.remove(index);
   
