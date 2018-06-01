@@ -7,6 +7,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+//database connection
 mongoose.connect('mongodb://localhost/robots');
 
 var app = express();
@@ -23,9 +24,5 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', index.home);
-app.get('/cats/new', cats.new);
-app.get('/cats', cats.list);
-app.get('/cats/bycolor/:color', cats.byColor);
-app.get('/cats/delete/old', cats.delete);
 
 app.listen(3000);
