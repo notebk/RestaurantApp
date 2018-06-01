@@ -7,6 +7,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+mongoose.connect('mongodb://localhost/robots');
+
 var app = express();
 
 //setting default layout of app to main.handlebars

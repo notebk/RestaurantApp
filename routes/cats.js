@@ -1,6 +1,7 @@
 var path = require("path");
 var express = require('express');
 var catData = require("./catData");
+var Robot = require('../models/model.js');
 var router = express.Router();
 var db = require('../fakeDatabase');
 
