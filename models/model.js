@@ -2,10 +2,10 @@
 var mongoose = require('mongoose');
 
 // Create a Schema
-var robotSchema = mongoose.Schema({
+var ingredientSchema = mongoose.Schema({
   name: String,
-  abilities: [String],
-  isEvil: Boolean
+  price: Number,
+  stock: Number
 });
 
-module.exports = mongoose.model("robot", robotSchema);
+module.exports = mongoose.model("ingredient", ingredientSchema);
