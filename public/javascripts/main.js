@@ -7,7 +7,7 @@ var onError = function(data, status) {
 };
 
 $new.on("submit", function(event) {
-//   event.stopImmediatePropagation();
+    event.stopImmediatePropagation();
     event.preventDefault();
     var name = $new.find("[name='name']").val();
     var price = $new.find("[name='price']").val();
@@ -20,3 +20,9 @@ $new.on("submit", function(event) {
         .done($("#results").load("/ingredients #list"))
         .error(onError);
 });
+
+$edit.on("click", function(event) {
+    event.stopImmediatePropagation();
+    event.preventDefault();
+    var item = $edit.find("[name=")
+})
